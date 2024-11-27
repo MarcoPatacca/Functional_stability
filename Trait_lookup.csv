@@ -1,0 +1,27 @@
+TraitID,TraitName,use_max,focal_trait,trait_short
+1,Max Growth Rate,1,1,Max growth rate
+4,Stem specific density (SSD) or wood density (stem dry mass per stem fresh volume),0,1,Wood density
+6,Root rooting depth,1,1,Max root depth
+14,Leaf nitrogen (N) content per leaf dry mass,0,1,Leaf N
+15,Leaf phosphorus (P) content per leaf dry mass,0,1,Leaf P
+24,Relative Bark Thickness,0,1,Rel. bark thickness
+26,Seed dry mass,0,1,Seed dry mass
+37,Leaf phenology,0,1,Leaf phenology
+44,Leaf potassium (K) content per leaf dry mass,0,1,Leaf K
+45,Stomata conductance per leaf area,0,1,Stomatal conduct.
+46,Leaf thickness,0,1,Leaf thickness
+48,"Leaf density (leaf tissue density, leaf dry mass per leaf volume)",0,1,Leaf density
+66,Max H/DBH ratio,1,1,Max h/dbh ratio
+185,Leaf photosynthesis carboxylation capacity (Vcmax) per leaf dry mass (Farquhar model),0,1,Leaf Vcmax
+281,"Stem conduit diameter (vessels, tracheids)",0,1,Conduit diameter
+324,Crown (canopy) length: diameter along the longest axis,1,1,Crown diameter
+719,"Xylem hydraulic vulnerability, xylem cavitation vulnerability, embolism vulnerability, (P20, P50, P80)",0,1,Xylem cav. Resistance
+773,Crown (canopy) height (base to top),1,1,Crown height
+1312,Max DBH,1,1,Max diameter
+3110,"Leaf area (in case of compound leaves: leaf, petiole included)",0,1,Leaf area
+3117,"Leaf area per leaf dry mass (specific leaf area, SLA or 1/LMA): undefined if petiole is in- or excluded",0,1,Specific leaf area
+2,Mean root diameter,0,1,Mean root D
+3,Sprecific root respiration,0,1,Sprecific root respiration
+5,Specific root length,0,1,SRL
+7,Root mass fraction,0,1,Root mass fraction
+8,Root C/N ratio,0,1,Root C/N ratio
