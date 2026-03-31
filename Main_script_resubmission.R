@@ -615,9 +615,9 @@ if (!inherits(europe, "sf")) europe <- st_as_sf(europe)
 
 # Create individual maps
 p_fire    <- plot_raster_gg(df_fire, "value", biogeo, "Fire", scale_low = "darkgreen", scale_high = "red",
-                            res = 0.5, agg_fun = mean, na.rm = TRUE)+ labs(tag = "A", x="", y="Latitude (°N)")
+                            res = 0.5, agg_fun = mean, na.rm = TRUE)+ labs(tag = "A", x="", y="Latitude (Â°N)")
 p_wbb     <- plot_raster_gg(df_wbb, "value", biogeo, "Wind & Bark Beetles", scale_low = "darkgreen", scale_high = "red",
-                            res = 0.5, agg_fun = mean, na.rm = TRUE)+ labs(tag = "B",  x="Longitude (°E)", y="")
+                            res = 0.5, agg_fun = mean, na.rm = TRUE)+ labs(tag = "B",  x="Longitude (Â°E)", y="")
 p_drought <- plot_raster_gg(df_drought, "value", biogeo,  "Drought", scale_low = "darkgreen", scale_high = "red",
                             res = 0.5, agg_fun = mean, na.rm = TRUE)+ labs(tag = "C",  x="", y="")
 
@@ -686,49 +686,34 @@ pdf(here("Output", "Figures", "Reworked", "Forest_plots_DELTA.pdf"),width=15, he
 forest_plot_DELTA
 dev.off()
 
-# formula interaction -------------------------------------------------
-formula_interaction<-c("~ (WBB_std_slope_dynamic * CWB_std_slope_dynamic_z * Fire_std_slope_dynamic) + (1|country)")
-
-# Apply model on axis 1
-drivers_assessment(Centroids.df_env, response_variable = axis.1.change, formula_interaction, grouping = TRUE,
-                   auto_scale = TRUE)-> Axis_1_DELTA_model_int
-Axis_1_DELTA_model_int$performance
-
-# Apply model on axis 2
-drivers_assessment(Centroids.df_env, response_variable = axis.2.change, formula_interaction, grouping = TRUE,
-                   auto_scale = TRUE)-> Axis_2_DELTA_model_int
-Axis_2_DELTA_model_int$performance
-
-
-# add together all the df
-Axis_1_DELTA_model_int$results %>% 
-  rbind(Axis_2_DELTA_model_int$results) %>% 
-  mutate(term = case_when(term == "WBB_std_slope_dynamic" ~ "Wind & B.Beetles",
-                          term == "Fire_std_slope_dynamic" ~ "Fire",
-                          term == "CWB_std_slope_dynamic_z" ~ "Drought",
-                          term == "WBB_std_slope_dynamic:CWB_std_slope_dynamic_z" ~ "Wind & B.Beetles : Drought",
-                          term == "WBB_std_slope_dynamic:Fire_std_slope_dynamic" ~ "Wind & B.Beetles : Fire",
-                          term == "CWB_std_slope_dynamic_z:Fire_std_slope_dynamic" ~ " Drought : Fire",
-                          term == "WBB_std_slope_dynamic:CWB_std_slope_dynamic_z:Fire_std_slope_dynamic" ~ "Wind & B.Beetles : Drought : Fire"),
-         axis = case_when(axis == "axis.1.change" ~ "PC1 LES change",
-                          axis == "axis.2.change" ~ "PC2 SAS change"))->DELTA_models_int
-
-
-# Produce plots
-forest_plot(DELTA_models_int)->forest_plot_DELTA_int
-forest_plot_DELTA_int
-
-
-
-#%%%%%%%%%%%%%%%%%%%%% Apply Bayesian Models on axis changes %%%%%%%%%%%%%%%%%%%
-# formula 
-formula<-c(" ~ WBB_std_slope_dynamic +
-                   CWB_std_slope_dynamic_z +
-                   Fire_std_slope_dynamic +
-                   (1 + WBB_std_slope_dynamic + CWB_std_slope_dynamic_z +
-                      Fire_std_slope_dynamic | bioreg) +
-                   (1 | country)")
-
-drivers_assessment_bayes(Centroids.df_env, response_variable = axis.1.change, formula)-> Axis_1_DELTA_Bayes
-
-drivers_assessment_bayes(Centroids.df_env, response_variable = axis.2.change, formula)-> Axis_2_DELTA_Bayes
+## formula interaction -------------------------------------------------
+#formula_interaction<-c("~ (WBB_std_slope_dynamic * CWB_std_slope_dynamic_z * Fire_std_slope_dynamic) + (1|country)")
+#
+## Apply model on axis 1
+#drivers_assessment(Centroids.df_env, response_variable = axis.1.change, formula_interaction, grouping = TRUE,
+#                   auto_scale = TRUE)-> Axis_1_DELTA_model_int
+#Axis_1_DELTA_model_int$performance
+#
+## Apply model on axis 2
+#drivers_assessment(Centroids.df_env, response_variable = axis.2.change, formula_interaction, grouping = TRUE,
+#                   auto_scale = TRUE)-> Axis_2_DELTA_model_int
+#Axis_2_DELTA_model_int$performance
+#
+#
+## add together all the df
+#Axis_1_DELTA_model_int$results %>% 
+#  rbind(Axis_2_DELTA_model_int$results) %>% 
+#  mutate(term = case_when(term == "WBB_std_slope_dynamic" ~ "Wind & B.Beetles",
+#                          term == "Fire_std_slope_dynamic" ~ "Fire",
+#                          term == "CWB_std_slope_dynamic_z" ~ "Drought",
+#                          term == "WBB_std_slope_dynamic:CWB_std_slope_dynamic_z" ~ "Wind & B.Beetles : Drought",
+#                          term == "WBB_std_slope_dynamic:Fire_std_slope_dynamic" ~ "Wind & B.Beetles : Fire",
+#                          term == "CWB_std_slope_dynamic_z:Fire_std_slope_dynamic" ~ " Drought : Fire",
+#                          term == "WBB_std_slope_dynamic:CWB_std_slope_dynamic_z:Fire_std_slope_dynamic" ~ "Wind & B.Beetles : Drought : Fire"),
+#         axis = case_when(axis == "axis.1.change" ~ "PC1 LES change",
+#                          axis == "axis.2.change" ~ "PC2 SAS change"))->DELTA_models_int
+#
+#
+## Produce plots
+#forest_plot(DELTA_models_int)->forest_plot_DELTA_int
+#forest_plot_DELTA_int
